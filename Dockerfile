@@ -13,7 +13,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-FROM ubuntu:18.04
+FROM ubuntu:16.04
 MAINTAINER Nate Drude "nate.drude@ohmlinxelectronics.com"
 
 RUN apt-get update
@@ -33,6 +33,28 @@ RUN groupadd --gid "${USER_GID}" "${USER}" && \
       --shell /bin/bash\
       --password $(openssl passwd -1 ubuntu)\
       ${USER}
+
+#Android ASOP on ubuntu 14.04
+#https://source.android.com/setup/build/initializing
+#RUN apt-get install -y \
+#    git-core gnupg flex bison gperf build-essential zip curl zlib1g-dev gcc-multilib \
+#    g++-multilib libc6-dev-i386 lib32ncurses5-dev x11proto-core-dev libx11-dev \
+#    lib32z-dev libgl1-mesa-dev libxml2-utils xsltproc unzip
+
+#https://boundarydevices.com/android-getting-started-guide/
+#Android ASOP on ubuntu 16.04
+RUN apt-get install -y \
+    openjdk-8-jdk
+RUN apt-get install -y \
+    git-core gnupg flex bison gperf build-essential \
+    zip curl zlib1g-dev gcc-multilib g++-multilib libc6-dev-i386 \
+    lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z-dev ccache \
+    libgl1-mesa-dev libxml2-utils xsltproc unzip
+#NXP Dependencies
+RUN apt-get install -y \
+    uuid uuid-dev lzop gperf liblz-dev liblzo2-2 \
+    liblzo2-dev u-boot-tools flex mtd-utils android-tools-fsutils bc \
+    repo git
 
 COPY docker-entrypoint.sh /usr/local/bin/
 ENTRYPOINT ["docker-entrypoint.sh"]
