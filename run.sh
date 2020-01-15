@@ -18,4 +18,4 @@
 uid=$(id -u ${USER})
 gid=$(id -g ${USER})
 
-docker run --rm -e HOST_USER_ID=$uid -e HOST_USER_GID=$gid -it -v ~/.ssh:/home/engr/.ssh -v $(pwd):/workdir ohmlinx:yocto-18
+docker run --rm -e HOST_USER_ID=$uid -e HOST_USER_GID=$gid -it -v ~/.ssh:/home/engr/.ssh -v $(pwd):/workdir -v ~/.gitconfig:/home/engr/.gitconfig ohmlinx:yocto-18
